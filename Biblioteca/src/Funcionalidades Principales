@@ -1,0 +1,40 @@
+--Usuario--
+Nombre
+IDusuario
+Rol
+Prestamos activos(boleano)
+
+Buscar libros por titulo, autor o categoria.(todos)
+Mostrar todos los libros disponibles.(todos)
+
+Realizar prestamos de libros.(todos)
+Devolver libros prestados.(todos)
+
+
+--Admin--
+Es un usuario que puede:
+
+Agregar libros nuevos.(admin)
+Eliminar libros existentes.(admin)
+
+Registrar nuevos usuarios.(admin)
+Consultar informacion de usuarios registrados.(admin)
+
+Mostrar libros actualmente prestados.(admin)
+
+
+--Libros--
+titulos
+autor
+categoria
+prestado o no (boleano)
+
+
+--Biblioteca--
+Lista de libros
+Lista usuarios
+
+
+--GestionGeneral--(Main)
+Preguntar usuario/admin
+Switch con cada funcion dependiendo si admin o usuario

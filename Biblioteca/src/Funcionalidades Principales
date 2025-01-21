@@ -6,20 +6,16 @@ Prestamos activos(boleano)
 
 Buscar libros por titulo, autor o categoria.(todos)
 Mostrar todos los libros disponibles.(todos)
-
 Realizar prestamos de libros.(todos)
 Devolver libros prestados.(todos)
 
 
 --Admin--
 Es un usuario que puede:
-
 Agregar libros nuevos.(admin)
 Eliminar libros existentes.(admin)
-
 Registrar nuevos usuarios.(admin)
 Consultar informacion de usuarios registrados.(admin)
-
 Mostrar libros actualmente prestados.(admin)
 
 

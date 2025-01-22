@@ -1,8 +1,8 @@
---Usuario--
+--Usuario-- HECHO
 Nombre
 IDusuario
 Rol
-Prestamos activos(boleano)
+Prestamo activos(boleano)
 
 Buscar libros por titulo, autor o categoria.(todos)
 Mostrar todos los libros disponibles.(todos)
@@ -19,7 +19,7 @@ Consultar informacion de usuarios registrados.(admin)
 Mostrar libros actualmente prestados.(admin)
 
 
---Libros--
+--Libros-- HECHO
 titulos
 autor
 categoria

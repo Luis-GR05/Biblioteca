@@ -1,5 +1,9 @@
+import java.util.List;
+
 public class Biblioteca {
-    public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-    }
+    
+    private List<Libro> libros;
+    private List<Usuario> usuarios;
+
+
 }

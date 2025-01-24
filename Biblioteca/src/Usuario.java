@@ -5,7 +5,7 @@ public class Usuario {
         boolean prestadoActivo;
 
         private String rolDefecto = "usuario";
-        private String prestadoDefecto = "false";
+        private boolean prestadoDefecto = false;
 
         public Usuario(String nombre, String rol){
             this.nombre = nombre;
@@ -49,7 +49,6 @@ public class Usuario {
             return rolAct;
         }
 
-
         @Override
         public String toString() {
             return "{" +
@@ -57,7 +56,7 @@ public class Usuario {
                 ", rol='" + getRol() + "'" +
                 ", prestadoActivo='" + getPrestadoActivo() + "'" +
                 ", rolDefecto='" + getRolDefecto() + "'" +
-                ", prestadoDefecto='" + getPrestadoDefecto() + "'" +
+                ", prestadoDefecto='" + getPrestadoActivo() + "'" +
                 "}";
         }
 

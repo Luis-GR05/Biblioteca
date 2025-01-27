@@ -63,6 +63,17 @@ class Biblioteca {
         }
     }
 
+    public void dejarLibro(Libros libro, Usuario usuario, Usuario admin) {
+        if (libro.getPrestado()) {
+            libro.setPrestado(false);
+            usuario.setPrestadoActivo(false);
+            System.out.println("Libro devuelto: " + libro);
+            } 
+            else {
+                System.out.println("El libro no está prestado.");
+            }
+    }
+
 
     public void registrarUsuario(Usuario usuario, Usuario admin) {
         if (admin.getRol().equals("admin")) {

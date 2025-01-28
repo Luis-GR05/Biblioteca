@@ -8,26 +8,35 @@ import java.util.Scanner;
 public class GestionGeneral {
       public static void main(String[] args) {
 
-      Libros libro1 = new Libros("La Sombra Del Viento", "Carlos Ruíz Zafón", "MISTERIO");
-      Libros libro2 = new Libros("La piedra filosofal", "J.K. Rowling", "FANTASÍA");
-      Libros libro3 = new Libros("Los pilares de la Tierra", "Ken Follett", "NOVELA HISTORICA");
-      Libros libro4 = new Libros("Geronimo Stilton","Elisabetta Dami","LITERATURA INFANTIL");
-      Libros libro5 = new Libros("El señor de los anillos","J.R.R. TOLKIEN","FANTASÍA");
-      Libros libro6 = new Libros("Orgullo y prejuicio","Jane Austen","DRAMA");
-      Libros libro7 = new Libros("El Principito","Antoine de Saint-Exupéry","LITERATURA INFANTIL");
-      Libros libro8 = new Libros("La Odisea","Homero","NARRATIVA POÉTICA");
-   
-      Usuario admin = new Usuario("Luis", "admin");
-      Usuario usuario = new Usuario("Jorge", "usuario");
+            Biblioteca biblioteca = new Biblioteca();
+            Libros libro1 = new Libros("La Sombra Del Viento", "Carlos Ruíz Zafón", "MISTERIO");
+            Libros libro2 = new Libros("La piedra filosofal", "J.K. Rowling", "FANTASÍA");
+            Libros libro3 = new Libros("Los pilares de la Tierra", "Ken Follett", "NOVELA HISTORICA");
+            Libros libro4 = new Libros("Geronimo Stilton", "Elisabetta Dami", "LITERATURA INFANTIL");
+            Libros libro5 = new Libros("El señor de los anillos", "J.R.R. TOLKIEN", "FANTASÍA");
+            Libros libro6 = new Libros("Orgullo y prejuicio", "Jane Austen", "DRAMA");
+            Libros libro7 = new Libros("El Principito", "Antoine de Saint-Exupéry", "LITERATURA INFANTIL");
+            Libros libro8 = new Libros("La Odisea", "Homero", "NARRATIVA POÉTICA");
 
-      admin.agregarLibro(libro1);
-      admin.agregarLibro(libro3);
+            Usuario admin = new Usuario("Luis", "admin");
+            Usuario usuario = new Usuario("Jorge", "usuario");
 
-      usuario.agregarLibro(libro2);
-      usuario.agregarLibro(libro5);
- }
-    // Menú interactivo
-      public void menu(Usuario usuario) {
+            biblioteca.agregarLibro(libro1, admin);
+            biblioteca.registrarUsuario(usuario, admin);
+            biblioteca.agregarLibro(libro2, admin);
+            biblioteca.agregarLibro(libro3, admin);
+            biblioteca.agregarLibro(libro4, admin);
+            biblioteca.agregarLibro(libro5, admin);
+            biblioteca.agregarLibro(libro6, admin);
+            biblioteca.agregarLibro(libro7, admin);
+            biblioteca.agregarLibro(libro8, admin);
+
+            menu(admin, biblioteca);
+
+      }
+
+      // Menú interactivo
+      public static void menu(Usuario usuario, Biblioteca biblioteca) {
             Scanner scanner = new Scanner(System.in);
             boolean salir = false;
 
@@ -53,19 +62,21 @@ public class GestionGeneral {
                         case 1:
                               System.out.print("Introduce el criterio de búsqueda: ");
                               String criterio = scanner.nextLine();
-                              buscarLibro(criterio);
+                              biblioteca.buscarLibro(criterio);
                               break;
                         case 2:
-                              mostrarLibros();
+                              biblioteca.mostrarLibrosDisponibles();
                               break;
                         case 3:
                               System.out.print("Introduce el título del libro a prestar: ");
+                              scanner.nextLine(); // Limpiar el buffer
                               String tituloPrestar = scanner.nextLine();
-                              Libros libroPrestar = Libro.stream()
-                                          .filter(l -> l.getTitulo().equalsIgnoreCase(tituloPrestar)).findFirst()
+                              Libros libroPrestar = biblioteca.getListaLibros().stream()
+                                          .filter(l -> l.getTitulo().equalsIgnoreCase(tituloPrestar))
+                                          .findFirst()
                                           .orElse(null);
                               if (libroPrestar != null) {
-                                    prestarLibro(libroPrestar, usuario);
+                                    biblioteca.prestarLibro(libroPrestar, usuario);
                               } else {
                                     System.out.println("Libro no encontrado.");
                               }
@@ -73,13 +84,12 @@ public class GestionGeneral {
                         case 4:
                               System.out.print("Introduce el título del libro a devolver: ");
                               String tituloDevolver = scanner.nextLine();
-                              Libro libroDevolver = libros.stream()
-                                          .filter(l -> l.getTitulo().equalsIgnoreCase(tituloDevolver)).findFirst()
-                                          .orElse(null);
-                              if (libroDevolver != null) {
-                                    devolverLibro(libroDevolver, usuario);
-                              } else {
-                                    System.out.println("Libro no encontrado.");
+                              for (Libros libroDevolver : biblioteca.getListaLibros()) {
+                                    if (libroDevolver.getTitulo().equals(tituloDevolver)) {
+                                          biblioteca.dejarLibro(libroDevolver, usuario);
+                                    } else {
+                                          System.out.println("Libro no encontrado.");
+                                    }
                               }
                               break;
                         case 5:
@@ -90,7 +100,8 @@ public class GestionGeneral {
                                     String nuevoAutor = scanner.nextLine();
                                     System.out.print("Introduce la categoría: ");
                                     String nuevaCategoria = scanner.nextLine();
-                                    agregarLibro(new Libro(nuevoTitulo, nuevoAutor, nuevaCategoria), usuario);
+                                    biblioteca.agregarLibro(new Libros(nuevoTitulo, nuevoAutor, nuevaCategoria),
+                                                usuario);
                               } else {
                                     System.out.println("No tienes permisos para esta opción.");
                               }
@@ -99,13 +110,12 @@ public class GestionGeneral {
                               if (usuario.getRol().equals("admin")) {
                                     System.out.print("Introduce el título del libro a eliminar: ");
                                     String tituloEliminar = scanner.nextLine();
-                                    Libro libroEliminar = libros.stream()
-                                                .filter(l -> l.getTitulo().equalsIgnoreCase(tituloEliminar)).findFirst()
-                                                .orElse(null);
-                                    if (libroEliminar != null) {
-                                          eliminarLibro(libroEliminar, usuario);
-                                    } else {
-                                          System.out.println("Libro no encontrado.");
+                                    for (Libros libroEliminar : biblioteca.getListaLibros()) {
+                                          if (libroEliminar.getTitulo().equals(tituloEliminar)) {
+                                                biblioteca.eliminarLibro(libroEliminar, usuario);
+                                          } else {
+                                                System.out.println("Libro no encontrado.");
+                                          }
                                     }
                               } else {
                                     System.out.println("No tienes permisos para esta opción.");
@@ -117,14 +127,15 @@ public class GestionGeneral {
                                     String nuevoNombre = scanner.nextLine();
                                     System.out.print("Introduce el rol (admin/usuario): ");
                                     String nuevoRol = scanner.nextLine();
-                                    registrarUsuario(new Usuario(nuevoNombre, nuevoRol), usuario);
+                                    Usuario usuarioNuevo = new Usuario(nuevoNombre, nuevoRol);
+                                    biblioteca.registrarUsuario(usuarioNuevo, usuario);
                               } else {
                                     System.out.println("No tienes permisos para esta opción.");
                               }
                               break;
                         case 8:
                               if (usuario.getRol().equals("admin")) {
-                                    mostrarLibrosPrestados();
+                                    biblioteca.mostrarLibrosPrestados();
                               } else {
                                     System.out.println("No tienes permisos para esta opción.");
                               }
@@ -138,6 +149,7 @@ public class GestionGeneral {
                               break;
                   }
             }
+            scanner.close();
       }
- 
+
 }

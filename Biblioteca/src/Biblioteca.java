@@ -53,14 +53,25 @@ class Biblioteca {
         }
     }
 
-    public void prestarLibro(Libros libro, Usuario usuario, Usuario admin) {
-        if (!libro.getPrestado()) {
+    public void prestarLibro(Libros libro, Usuario usuario) {
+        if (!libro.getPrestado() && usuario.getRol().equals("admin")) {
             libro.setPrestado(true);
-            usuario.prestadoActivo(libro);
+            usuario.setPrestadoActivo(true);
             System.out.println("Libro prestado: " + libro);
         } else {
             System.out.println("El libro ya está prestado.");
         }
+    }
+
+    public void dejarLibro(Libros libro, Usuario usuario) {
+        if (libro.getPrestado() && usuario.getRol().equals("admin")) {
+            libro.setPrestado(false);
+            usuario.setPrestadoActivo(false);
+            System.out.println("Libro devuelto: " + libro);
+            } 
+            else {
+                System.out.println("El libro no está prestado o no eres admin.");
+            }
     }
 
 
@@ -72,4 +83,19 @@ class Biblioteca {
             System.out.println("Solo un administrador puede registrar usuarios.");
         }
     }
+
+    public void mostrarLibrosPrestados(){
+        System.out.println("Libros prestados:");    
+        for (Libros libro : libros) {
+            if (libro.getPrestado()) {
+                System.out.println(libro);
+            }
+        }
+    }
+
+    public List<Libros> getListaLibros() {
+    return this.libros; 
+    }
+    
+
 }

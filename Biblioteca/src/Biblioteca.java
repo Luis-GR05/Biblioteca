@@ -11,13 +11,14 @@ class Biblioteca {
         usuarios = new ArrayList<>();
     }
 
-    public void agregarUsuarioAdminInicial(Usuario admin){
+    public void agregarUsuarioAdminInicial(Usuario admin) {
         usuarios.add(admin);
     }
 
-    public void agregarLibrosIniciales(Libros libro){
+    public void agregarLibrosIniciales(Libros libro) {
         libros.add(libro);
     }
+
     public void agregarLibro(Libros libro, Usuario admin) {
 
         if (admin.getRol().equals("admin")) {
@@ -44,8 +45,8 @@ class Biblioteca {
         System.out.println("Resultados de búsqueda para: " + criterio);
         for (Libros libro : libros) {
             if (libro.getTitulo().toLowerCase().contains(criterio.toLowerCase()) ||
-                libro.getAutor().toLowerCase().contains(criterio.toLowerCase()) ||
-                libro.getCategoria().toLowerCase().contains(criterio.toLowerCase())) {
+                    libro.getAutor().toLowerCase().contains(criterio.toLowerCase()) ||
+                    libro.getCategoria().toLowerCase().contains(criterio.toLowerCase())) {
                 System.out.println(libro);
             }
         }
@@ -66,7 +67,7 @@ class Biblioteca {
             usuario.setPrestadoActivo(true);
             System.out.println("Libro prestado: " + libro);
         } else {
-            System.out.println("El libro ya está prestado.");
+            System.out.println("El libro ya está prestado o no está disponible.");
         }
     }
 
@@ -75,10 +76,9 @@ class Biblioteca {
             libro.setPrestado(false);
             usuario.setPrestadoActivo(false);
             System.out.println("Libro devuelto: " + libro);
-            } 
-            else {
-                System.out.println("El libro no está prestado o no eres admin.");
-            }
+        } else {
+            System.out.println("El libro no está prestado o no eres admin.");
+        }
     }
 
 
@@ -91,8 +91,8 @@ class Biblioteca {
         }
     }
 
-    public void mostrarLibrosPrestados(){
-        System.out.println("Libros prestados:");    
+    public void mostrarLibrosPrestados() {
+        System.out.println("Libros prestados:");
         for (Libros libro : libros) {
             if (libro.getPrestado()) {
                 System.out.println(libro);
@@ -101,8 +101,11 @@ class Biblioteca {
     }
 
     public List<Libros> getListaLibros() {
-    return this.libros; 
+        return this.libros;
     }
-    
+
+    public List<Usuario> getListaUsuario() {
+        return this.usuarios;
+    }
 
 }

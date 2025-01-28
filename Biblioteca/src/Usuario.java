@@ -40,9 +40,9 @@ public class Usuario {
     public String comprobarRol(String rol) {
         String rolAct;
         if (!rol.equals("usuario") || !rol.equals("admin")) {
-            rolAct = rolDefecto;
-        } else {
             rolAct = rol;
+        } else {
+            rolAct = rolDefecto;
         }
 
         return rolAct;

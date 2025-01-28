@@ -32,8 +32,29 @@ public class GestionGeneral {
             biblioteca.agregarLibrosIniciales(libro7);
             biblioteca.agregarLibrosIniciales(libro8);
 
-            menu(admin, biblioteca);
-
+            String contraseñaAdmins="9123";
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Bienvenido a la biblioteca");
+            System.out.println("Para acceder a la biblioteca, por favor, ingrese su nombre de usuario:");
+            String nombreUsuario = sc.nextLine();
+            for(Usuario usuarioAct : biblioteca.getListaUsuario()){
+                  if(usuarioAct.getNombre().equalsIgnoreCase(nombreUsuario)){
+                        System.out.println("Ahora ingrese su contraseña:");
+                        String contraseña = sc.nextLine();
+                        if(contraseña.equals(contraseñaAdmins)){
+                              Usuario actual = new Usuario(usuarioAct.getNombre(),usuarioAct.getRol());
+                              System.out.println("Bienvenido "+nombreUsuario);
+                              menu(actual, biblioteca);
+                        }
+                        else{
+                              System.out.println("Contraseña incorrecta");
+                        }
+                  }
+                  else{
+                        System.out.println("Usuario no encontrado");
+                  }
+            }
+            sc.close();
       }
 
       // Menú interactivo
@@ -57,7 +78,7 @@ public class GestionGeneral {
 
                   System.out.println("0. Salir");
                   System.out.print("Elige una opción: ");
-                  int opcion = scanner.nextInt();
+                  int opcion = Integer.parseInt(scanner.nextLine());
 
                   switch (opcion) {
                         case 1:
@@ -75,8 +96,6 @@ public class GestionGeneral {
                               for (Libros libroPrestar : biblioteca.getListaLibros()) {
                                     if (libroPrestar.getTitulo().equals(tituloPrestar)) {
                                           biblioteca.prestarLibro(libroPrestar, usuario);
-                                    } else {
-                                          System.out.println("Libro no encontrado.");
                                     }
                               }
                               break;
@@ -131,7 +150,7 @@ public class GestionGeneral {
                               } else {
                                     System.out.println("No tienes permisos para esta opción.");
                               }
-                              break;
+                              break;      
                         case 8:
                               if (usuario.getRol().equals("admin")) {
                                     biblioteca.mostrarLibrosPrestados();

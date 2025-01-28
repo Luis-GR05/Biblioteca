@@ -11,6 +11,13 @@ class Biblioteca {
         usuarios = new ArrayList<>();
     }
 
+    public void agregarUsuarioAdminInicial(Usuario admin){
+        usuarios.add(admin);
+    }
+
+    public void agregarLibrosIniciales(Libros libro){
+        libros.add(libro);
+    }
     public void agregarLibro(Libros libro, Usuario admin) {
 
         if (admin.getRol().equals("admin")) {

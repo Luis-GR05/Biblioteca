@@ -19,17 +19,18 @@ public class GestionGeneral {
             Libros libro8 = new Libros("La Odisea", "Homero", "NARRATIVA POÉTICA");
 
             Usuario admin = new Usuario("Luis", "admin");
+            biblioteca.agregarUsuarioAdminInicial(admin);
             Usuario usuario = new Usuario("Jorge", "usuario");
-
-            biblioteca.agregarLibro(libro1, admin);
-            biblioteca.registrarUsuario(usuario, admin);
-            biblioteca.agregarLibro(libro2, admin);
-            biblioteca.agregarLibro(libro3, admin);
-            biblioteca.agregarLibro(libro4, admin);
-            biblioteca.agregarLibro(libro5, admin);
-            biblioteca.agregarLibro(libro6, admin);
-            biblioteca.agregarLibro(libro7, admin);
-            biblioteca.agregarLibro(libro8, admin);
+            biblioteca.agregarUsuarioAdminInicial(usuario);
+            
+            biblioteca.agregarLibrosIniciales(libro1);
+            biblioteca.agregarLibrosIniciales(libro2);
+            biblioteca.agregarLibrosIniciales(libro3);
+            biblioteca.agregarLibrosIniciales(libro4);
+            biblioteca.agregarLibrosIniciales(libro5);
+            biblioteca.agregarLibrosIniciales(libro6);
+            biblioteca.agregarLibrosIniciales(libro7);
+            biblioteca.agregarLibrosIniciales(libro8);
 
             menu(admin, biblioteca);
 
@@ -69,16 +70,14 @@ public class GestionGeneral {
                               break;
                         case 3:
                               System.out.print("Introduce el título del libro a prestar: ");
-                              scanner.nextLine(); // Limpiar el buffer
+                              scanner.nextLine();
                               String tituloPrestar = scanner.nextLine();
-                              Libros libroPrestar = biblioteca.getListaLibros().stream()
-                                          .filter(l -> l.getTitulo().equalsIgnoreCase(tituloPrestar))
-                                          .findFirst()
-                                          .orElse(null);
-                              if (libroPrestar != null) {
-                                    biblioteca.prestarLibro(libroPrestar, usuario);
-                              } else {
-                                    System.out.println("Libro no encontrado.");
+                              for (Libros libroPrestar : biblioteca.getListaLibros()) {
+                                    if (libroPrestar.getTitulo().equals(tituloPrestar)) {
+                                          biblioteca.prestarLibro(libroPrestar, usuario);
+                                    } else {
+                                          System.out.println("Libro no encontrado.");
+                                    }
                               }
                               break;
                         case 4:

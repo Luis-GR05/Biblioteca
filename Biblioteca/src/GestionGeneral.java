@@ -32,26 +32,30 @@ public class GestionGeneral {
             biblioteca.agregarLibrosIniciales(libro7);
             biblioteca.agregarLibrosIniciales(libro8);
 
-            String contraseñaAdmins="9123";
+            String contraseñaAdmins = "9123";
             Scanner sc = new Scanner(System.in);
             System.out.println("Bienvenido a la biblioteca");
             System.out.println("Para acceder a la biblioteca, por favor, ingrese su nombre de usuario:");
             String nombreUsuario = sc.nextLine();
-            for(Usuario usuarioAct : biblioteca.getListaUsuario()){
-                  if(usuarioAct.getNombre().equalsIgnoreCase(nombreUsuario)){
-                        System.out.println("Ahora ingrese su contraseña:");
-                        String contraseña = sc.nextLine();
-                        if(contraseña.equals(contraseñaAdmins)){
-                              Usuario actual = new Usuario(usuarioAct.getNombre(),usuarioAct.getRol());
-                              System.out.println("Bienvenido "+nombreUsuario);
-                              menu(actual, biblioteca);
-                        }
-                        else{
-                              System.out.println("Contraseña incorrecta");
+            for (Usuario usuarioAct : biblioteca.getListaUsuario()) {
+                  if (usuarioAct.getRol().equals("admin")) {
+                        if (usuarioAct.getNombre().equalsIgnoreCase(nombreUsuario)) {
+                              System.out.println("Ahora ingrese su contraseña:");
+                              String contraseña = sc.nextLine();
+                              if (contraseña.equals(contraseñaAdmins)) {
+                                    Usuario actual = new Usuario(nombreUsuario, "admin");
+                                    System.out.println("Bienvenido " + nombreUsuario);
+                                    menu(actual, biblioteca);
+                              } else {
+                                    System.out.println("Contraseña incorrecta");
+                              }
+                        } else {
+                              System.out.println("Usuario no encontrado");
                         }
                   }
                   else{
-                        System.out.println("Usuario no encontrado");
+                        Usuario actual = new Usuario(nombreUsuario, "usuario");
+                        menu(actual, biblioteca);
                   }
             }
             sc.close();
